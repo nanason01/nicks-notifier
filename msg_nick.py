@@ -4,16 +4,13 @@
 
 import sys
 import requests
-import json
 
 
-def send_message(url, message):
-    headers = {'Content-Type': 'application/json'}
-    payload = {'message': message}
-
+def send_message(message):
+    url = 'https://m5s2b31841.execute-api.us-east-2.amazonaws.com/prod/'
+    
     try:
-        response = requests.post(url, headers=headers,
-                                 data=json.dumps(payload))
+        response = requests.get(url, params={'message': message})
         response.raise_for_status()
     except Exception as e:
         # If the request fails, exit with a status code of 1
@@ -25,7 +22,6 @@ def send_message(url, message):
 
 
 if __name__ == '__main__':
-    url = 'https://t7n4heq5w4.execute-api.us-east-1.amazonaws.com/prod'
 
     if len(sys.argv) < 2:
         print('Usage: python script.py <message>')
@@ -33,4 +29,4 @@ if __name__ == '__main__':
 
     message = sys.argv[1]
 
-    send_message(url, message)
+    send_message(message)
